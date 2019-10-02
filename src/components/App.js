@@ -2,28 +2,48 @@ import React from 'react'
 import Form from './Form'
 import Todo from './Todo'
 
-const App = () => 
-  <div>
-    <Form />
+let currentId = 0
 
-    <label>
-      <input type="checkbox" />
-      すべて完了にする
-    </label>
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      todos: []
+    }
+  }
+  render(){
+    return(
+      <div>
+        <Form onSubmit={this.handleSubmit} />
 
-    <select>
-      <option>すべて</option>
-      <option>未完了</option>
-      <option>完了済み</option>
-    </select>
+        <label>
+          <input type="checkbox" />
+          すべて完了にする
+        </label>
 
-    <ul>
-      <Todo id={0} text="task1" />
-      <Todo id={0} text="task2" />
-      <Todo id={0} text="task3" />
-    </ul>
+        <select>
+          <option>すべて</option>
+          <option>未完了</option>
+          <option>完了済み</option>
+        </select>
 
-    <button>完了済みをすべて削除</button>
-  </div>
+        <ul>
+          {this.state.todos.map(({id, text}) => <Todo key={id} text={text} />)}
+        </ul>
+
+        <button>完了済みをすべて削除</button>
+      </div>
+    )
+  }
+  handleSubmit = text => {
+    const newTodo = {
+      id: currentId,
+      text,
+    }
+    const newTodos = [...this.state.todos, newTodo]
+    this.setState({todos: newTodos})
+    currentId++
+  }
+}
 
 export default App;
