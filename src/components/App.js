@@ -1,20 +1,9 @@
 import React from 'react'
+import Form from './Form'
 
-// クラスコンポーネント
-// class App extends React.Component {
-//     render() {
-//         return <div>App</div>
-//     }
-// }
-
-// ファンクショナルコンポーネント
 const App = () => 
   <div>
-    <form>
-      <input type="text" />
-      <button>追加</button>
-    </form>
-
+    <Form />
     <label>
       <input type="checkbox" />
       すべて完了にする
