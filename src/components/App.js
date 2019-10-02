@@ -1,6 +1,7 @@
 import React from 'react'
 import Form from './Form'
 import Todo from './Todo'
+import CheckAll from './CheckAll'
 
 let currentId = 0
 
@@ -12,14 +13,17 @@ class App extends React.Component{
     }
   }
   render(){
+    const {todos} = this.state
     return(
       <div>
         <Form onSubmit={this.handleSubmit} />
 
-        <label>
-          <input type="checkbox" />
-          すべて完了にする
-        </label>
+        <CheckAll
+          allCompleted={
+            todos.length > 0 && todos.every(({completed}) => completed)
+          }
+          onChange={this.handleChangeAllCompleted}
+        />
 
         <select>
           <option>すべて</option>
@@ -28,7 +32,7 @@ class App extends React.Component{
         </select>
 
         <ul>
-          {this.state.todos.map(({id, text, completed}) => 
+          {todos.map(({id, text, completed}) => 
             <Todo
               key={id}
               id={id}
@@ -51,6 +55,13 @@ class App extends React.Component{
     const newTodos = [...this.state.todos, newTodo]
     this.setState({todos: newTodos})
     currentId++
+  }
+  handleChangeAllCompleted = completed => {
+    const newTodos = this.state.todos.map(todo => ({
+      ...todo,
+      completed,
+    }))
+    this.setState({todos:newTodos})
   }
   handleChangeCompleted = (id, completed) => {
     const newTodos = this.state.todos.map(todo => {
