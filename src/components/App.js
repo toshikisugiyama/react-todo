@@ -28,7 +28,14 @@ class App extends React.Component{
         </select>
 
         <ul>
-          {this.state.todos.map(({id, text}) => <Todo key={id} text={text} />)}
+          {this.state.todos.map(({id, text, completed}) => 
+            <Todo
+              key={id}
+              id={id}
+              text={text}
+              completed={completed}
+              onChange={this.handleChangeCompleted}
+            />)}
         </ul>
 
         <button>完了済みをすべて削除</button>
@@ -39,10 +46,23 @@ class App extends React.Component{
     const newTodo = {
       id: currentId,
       text,
+      completed: false
     }
     const newTodos = [...this.state.todos, newTodo]
     this.setState({todos: newTodos})
     currentId++
+  }
+  handleChangeCompleted = (id, completed) => {
+    const newTodos = this.state.todos.map(todo => {
+      if(todo.id === id){
+        return {
+          ...todo,
+          completed,
+        }
+      }
+      return todo
+    })
+    this.setState({todos: newTodos})
   }
 }
 
