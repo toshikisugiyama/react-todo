@@ -46,6 +46,7 @@ class App extends React.Component{
               text={text}
               completed={completed}
               onChange={this.handleChangeCompleted}
+              onDelete={this.handleClickDelete}
             />)}
         </ul>
 
@@ -88,6 +89,10 @@ class App extends React.Component{
   }
   handleChangeFilter = filter => {
     this.setState({filter})
+  }
+  handleClickDelete = id => {
+    const newTodos = this.state.todos.filter(todo => todo.id !== id)
+    this.setState({todos: newTodos})
   }
 }
 
