@@ -13,7 +13,6 @@ class Filter extends React.Component{
   }
   handleChange = e => {
     this.props.onChange(e.currentTarget.value)
-
   }
 }
 
